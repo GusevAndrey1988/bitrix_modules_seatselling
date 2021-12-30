@@ -35,7 +35,15 @@ class site_seatselling extends CModule
 
     public function InstallDB()
     {
-        
+        global $APPLICATION;
+        global $DB;
+        if ($errors = $DB->RunSQLBatch(__DIR__ . '/db/install.sql'))
+        {
+            $APPLICATION->ThrowException($errors);
+            return false;
+        }
+
+        return true;
     }
 
     public function UnInstallDB()
