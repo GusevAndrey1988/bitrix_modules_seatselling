@@ -37,6 +37,13 @@ class SectionTable extends ORM\Data\DataManager
                     ];
                 },
             ]))->configureNullable(false),
+
+            (new ORM\Fields\Relations\OneToMany(
+                'SEATS',
+                \Site\SeatSelling\ORM\SeatTable\SeatTable::class,
+                'SECTION'
+            ))
+                ->configureJoinType('inner'),
         ];
     }
 }
