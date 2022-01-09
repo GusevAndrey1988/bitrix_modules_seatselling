@@ -37,6 +37,12 @@ class PricePolicyTable extends ORM\Data\DataManager
                     ];
                 }
             ]))->configureNullable(false),
+
+            (new ORM\Fields\Relations\OneToMany(
+                'COSTS',
+                \Site\SeatSelling\ORM\CostTable\CostTable::class,
+                'PRICE_POLICY'
+            ))->configureJoinType('inner'),
         ];
     }
 }

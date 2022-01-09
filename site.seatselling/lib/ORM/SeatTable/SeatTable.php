@@ -57,8 +57,13 @@ class SeatTable extends ORM\Data\DataManager
                 'SECTION',
                 \Site\SeatSelling\ORM\SectionTable\SectionTable::class,
                 ORM\Query\Join::on('this.SECTION_ID', 'ref.ID')
-            ))
-                ->configureJoinType('inner'),
+            ))->configureJoinType('inner'),
+
+            (new ORM\Fields\Relations\OneToMany(
+                'COSTS',
+                \Site\SeatSelling\ORM\CostTable\CostTable::class,
+                'SEAT'
+            ))->configureJoinType('inner'),
         ];
     }
 

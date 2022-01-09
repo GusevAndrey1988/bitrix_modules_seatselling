@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `site_seat_selling_cost` (
         ON DELETE CASCADE
         ON UPDATE CASCADE,
 
-        FOREIGN KEY (`PRICE_POLICY_ID`)
+    FOREIGN KEY (`PRICE_POLICY_ID`)
         REFERENCES `site_seat_selling_price_policy`(`ID`)
         ON DELETE CASCADE
         ON UPDATE CASCADE
