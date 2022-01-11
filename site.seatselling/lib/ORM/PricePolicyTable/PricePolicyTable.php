@@ -43,6 +43,12 @@ class PricePolicyTable extends ORM\Data\DataManager
                 \Site\SeatSelling\ORM\CostTable\CostTable::class,
                 'PRICE_POLICY'
             ))->configureJoinType('inner'),
+
+            (new ORM\Fields\Relations\OneToMany(
+                'EVENTS',
+                \Site\SeatSelling\ORM\EventTable\EventTable::class,
+                'PRICE_POLICY'
+            ))->configureJoinType('inner'),
         ];
     }
 }
