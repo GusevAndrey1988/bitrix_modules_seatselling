@@ -2,8 +2,6 @@
 
 namespace Site\SeatSelling\Model\Entity\Section;
 
-use Bitrix\Main\ArgumentException;
-
 class Section
 {
     private $id = 0;
@@ -13,7 +11,7 @@ class Section
     {
         if (!$this->validateId($id))
         {
-            throw new ArgumentException('incorrect id: ' . $id);
+            throw new \InvalidArgumentException('incorrect id: ' . $id);
         }
 
         if (!$this->validateNameLength($name))
@@ -41,7 +39,7 @@ class Section
         {
             throw new NameLengthException($name, 255);
         }
-         
+
         return $this->name;
     }
 
