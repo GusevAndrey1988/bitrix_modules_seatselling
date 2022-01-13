@@ -35,41 +35,47 @@ class site_seatselling extends CModule
 
     public function InstallDB()
     {
-        global $APPLICATION;
-        global $DB;
-        if ($errors = $DB->RunSQLBatch(__DIR__ . '/db/install.sql'))
-        {
-            $APPLICATION->ThrowException($errors);
-            return false;
-        }
-
-        return true;
+        return $this->sqlBatch(__DIR__ . '/db/install.sql');
     }
 
     public function UnInstallDB()
     {
-        global $APPLICATION;
-        global $DB;
-        if ($errors = $DB->RunSQLBatch(__DIR__ . '/db/uninstall.sql'))
-        {
-            $APPLICATION->ThrowException($errors);
-            return false;
-        }
-
-        return true;
+        return $this->sqlBatch(__DIR__ . '/db/uninstall.sql');
     }
 
     public function DoInstall()
     {
-        $this->InstallDB();
+        /** @var \CMain $APPLICATION */
+        global $APPLICATION;
+
+        if (!empty($errors = $this->InstallDB()))
+        {
+            $APPLICATION->ThrowException(implode(',', $errors));
+            return false;
+        }
 
         ModuleManager::registerModule($this->MODULE_ID);
     }
 
     public function DoUninstall()
     {
-        $this->UnInstallDB();
+        /** @var \CMain $APPLICATION */
+        global $APPLICATION;
+
+        if (!empty($errors = $this->UnInstallDB()))
+        {
+            $APPLICATION->ThrowException(implode(',', $errors));
+            return false;
+        }
 
         ModuleManager::unRegisterModule($this->MODULE_ID);
+    }
+
+    private function sqlBatch(string $fileName): array
+    {
+        $sqlFileData = file_get_contents($fileName);
+
+        $connection = \Bitrix\Main\Application::getConnection();
+        return $connection->executeSqlBatch($sqlFileData);
     }
 }
