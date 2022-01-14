@@ -2,30 +2,26 @@
 
 namespace Site\SeatSelling\Model\Entity\Section;
 
-class Section
+use Site\SeatSelling\Model\Entity;
+use Site\SeatSelling\Model\Entity\Exception;
+use Site\SeatSelling\Model\Entity\Validator;
+
+class Section extends Entity\Entity
 {
-    private $id = 0;
+    /** @var string $name */
     private $name = '';
 
+    /** @var Entity\Seat\Seat[] $seatList */
+    private $seatList = [];
+
+    /**
+     * @throws \InvalidArgumentException
+     * @throws \Site\SeatSelling\Model\Entity\Exception\NameLengthException
+     */
     public function __construct(int $id, string $name)
     {
-        if (!$this->validateId($id))
-        {
-            throw new \InvalidArgumentException('incorrect id: ' . $id);
-        }
-
-        if (!$this->validateNameLength($name))
-        {
-            throw new NameLengthException($name, 255);
-        }
-
-        $this->id = $id;
-        $this->name = $name;
-    }
-
-    public function getId(): int
-    {
-        return $this->id;
+        $this->setId($id);
+        $this->setName($name);
     }
 
     public function getName(): string
@@ -33,33 +29,58 @@ class Section
         return $this->name;
     }
 
-    public function setName(string $name)
+    /**
+     * @throws \Site\SeatSelling\Model\Entity\Exception\NameLengthException
+     */
+    public function setName(string $name): void
     {
-        if (!$this->validateNameLength($name))
+        if (!Validator\NameLengthValidator::validate($name))
         {
-            throw new NameLengthException($name, 255);
+            throw new Exception\NameLengthException($name,
+                Validator\NameLengthValidator::MAX_NAME_LENGTH);
         }
 
-        return $this->name;
+        $this->name = $name;
     }
 
-    private function validateId(int $id): bool
+    public function addSeat(Entity\Seat\Seat $seat): bool
     {
-        if ($id <= 0)
+        if (array_key_exists($seat->getId(), $this->seatList))
         {
             return false;
         }
 
+        $this->seatList[$seat->getId()] = $seat;
+
         return true;
     }
 
-    private function validateNameLength(string $name): bool
+    public function getSeatByPosition(int $row, int $col): ?Entity\Seat\Seat
     {
-        if (strlen($name) == 0 || mb_strlen($name) > 255)
+        foreach ($this->seatList as $seat)
         {
-            return false;
+            if ($seat->getRow() == $row && $seat->getCol() == $col)
+            {
+                return $seat;
+            }
         }
 
-        return true;
+        return null;
+    }
+
+    public function removeSeatById(int $id): bool
+    {
+        if (!Validator\EntityIdValidator::validate($id))
+        {
+            throw new Exception\EntityIdException($id);
+        }
+
+        if (array_key_exists($id, $this->seatList))
+        {
+            unset($this->seatList[$id]);
+            return true;
+        }
+
+        return false;
     }
 }
