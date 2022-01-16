@@ -12,6 +12,9 @@ class SeatTable extends ORM\Data\DataManager
 {
     private const TABLE_NAME = 'site_seat_selling_seat';
 
+    private const MIN_SEAT_NUM = 0;
+    private const MAX_SEAT_NUM = 65535;
+
     public static function getTableName(): string
     {
         return self::TABLE_NAME;
@@ -40,7 +43,7 @@ class SeatTable extends ORM\Data\DataManager
             (new ORM\Fields\IntegerField('ROW', [
                 'validation' => function() {
                     return [
-                        new ORM\Fields\Validators\RangeValidator(0, 65535),
+                        static::seatPositionValidator(),
                     ];
                 }
             ]))->configureNullable(false),
@@ -48,7 +51,7 @@ class SeatTable extends ORM\Data\DataManager
             (new ORM\Fields\IntegerField('COL', [
                 'validation' => function() {
                     return [
-                        new ORM\Fields\Validators\RangeValidator(0, 65535),
+                        static::seatPositionValidator(),
                     ];
                 }
             ]))->configureNullable(false),
@@ -109,5 +112,13 @@ class SeatTable extends ORM\Data\DataManager
         }
 
         return $result;
+    }
+
+    private static function seatPositionValidator()
+    {
+        return new ORM\Fields\Validators\RangeValidator(
+            static::MIN_SEAT_NUM, 
+            static::MAX_SEAT_NUM
+        );
     }
 }
