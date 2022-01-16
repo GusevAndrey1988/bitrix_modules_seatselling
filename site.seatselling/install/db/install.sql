@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `site_seat_selling_event` (
     `NAME` VARCHAR(255) NOT NULL,
     `DESCRIPTION` TEXT,
     `EVENT_TIME` DATETIME NOT NULL,
-    `DURATION` SMALLINT,
+    `DURATION` SMALLINT UNSIGNED,
 
     FOREIGN KEY (`PRICE_POLICY_ID`)
         REFERENCES `site_seat_selling_price_policy`(`ID`)
