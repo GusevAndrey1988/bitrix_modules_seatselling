@@ -3,8 +3,8 @@
 namespace Site\SeatSelling\Model\Entity\Section;
 
 use Site\SeatSelling\Model\Entity;
-use Site\SeatSelling\Model\Entity\Exception;
-use Site\SeatSelling\Model\Entity\Validator;
+use Site\SeatSelling\Model\Exception;
+use Site\SeatSelling\Model\Validator;
 
 class Section extends Entity\Entity
 {
@@ -16,7 +16,7 @@ class Section extends Entity\Entity
 
     /**
      * @throws \InvalidArgumentException
-     * @throws \Site\SeatSelling\Model\Entity\Exception\NameLengthException
+     * @throws Exception\NameLengthException
      */
     public function __construct(int $id, string $name)
     {
@@ -30,7 +30,7 @@ class Section extends Entity\Entity
     }
 
     /**
-     * @throws \Site\SeatSelling\Model\Entity\Exception\NameLengthException
+     * @throws Exception\NameLengthException
      */
     public function setName(string $name): void
     {
@@ -82,6 +82,9 @@ class Section extends Entity\Entity
         return null;
     }
 
+    /**
+     * @throws Exception\EntityIdException
+     */
     public function removeSeatById(int $id): bool
     {
         if (!Validator\EntityIdValidator::validate($id))

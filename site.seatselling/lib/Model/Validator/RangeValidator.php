@@ -1,6 +1,6 @@
 <?php
 
-namespace Site\SeatSelling\Model\Entity\Validator;
+namespace Site\SeatSelling\Model\Validator;
 
 class RangeValidator
 {

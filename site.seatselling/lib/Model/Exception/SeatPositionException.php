@@ -1,8 +1,8 @@
 <?php
 
-namespace Site\SeatSelling\Model\Entity\Exception;
+namespace Site\SeatSelling\Model\Exception;
 
-use Site\SeatSelling\Model\Entity\Validator\SeatPositionValidator as Validator;
+use Site\SeatSelling\Model\Validator\SeatPositionValidator as Validator;
 
 class SeatPositionException extends \Exception
 {

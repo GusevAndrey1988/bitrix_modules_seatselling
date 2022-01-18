@@ -2,8 +2,8 @@
 
 namespace Site\SeatSelling\Model\Entity;
 
-use Site\SeatSelling\Model\Entity\Exception;
-use Site\SeatSelling\Model\Entity\Validator;
+use Site\SeatSelling\Model\Exception;
+use Site\SeatSelling\Model\Validator;
 
 class Entity
 {
@@ -15,7 +15,7 @@ class Entity
     }
 
      /**
-     * @throws \InvalidArgumentException
+     * @throws Exception\EntityIdException
      */
     protected function setId($id): void
     {

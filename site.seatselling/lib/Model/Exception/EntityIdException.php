@@ -1,6 +1,6 @@
 <?php
 
-namespace Site\SeatSelling\Model\Entity\Exception;
+namespace Site\SeatSelling\Model\Exception;
 
 class EntityIdException extends \Exception
 {

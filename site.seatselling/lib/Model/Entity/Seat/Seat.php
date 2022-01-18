@@ -3,8 +3,8 @@
 namespace Site\SeatSelling\Model\Entity\Seat;
 
 use Site\SeatSelling\Model\Entity;
-use Site\SeatSelling\Model\Entity\Exception;
-use Site\SeatSelling\Model\Entity\Validator;
+use Site\SeatSelling\Model\Exception;
+use Site\SeatSelling\Model\Validator;
 
 class Seat extends Entity\Entity
 {
@@ -27,6 +27,9 @@ class Seat extends Entity\Entity
         $section->addSeat($this);
     }
 
+    /**
+     * @throws Exception\SeatPositionException
+     */
     public function setRow(int $row): void
     {
         if (!Validator\SeatPositionValidator::validate($row))
@@ -42,6 +45,9 @@ class Seat extends Entity\Entity
         return $this->row;
     }
 
+    /**
+     * @throws Exception\SeatPositionException
+     */
     public function setCol(int $col): void
     {
         if (!Validator\SeatPositionValidator::validate($col))
