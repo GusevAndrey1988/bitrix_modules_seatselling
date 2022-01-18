@@ -45,14 +45,28 @@ class Section extends Entity\Entity
 
     public function addSeat(Entity\Seat\Seat $seat): bool
     {
-        if (array_key_exists($seat->getId(), $this->seatList))
+        if (!$this->hasSeatById($seat->getId()))
         {
-            return false;
+            $this->seatList[$seat->getId()] = $seat;
+            return true;
         }
 
-        $this->seatList[$seat->getId()] = $seat;
+        return false;
+    }
 
-        return true;
+    public function hasSeatById(int $id): bool
+    {
+        return array_key_exists($id, $this->seatList);
+    }
+
+    public function getSeatById(int $id): ?Entity\Seat\Seat
+    {
+        if ($this->hasSeatById($id))
+        {
+            return $this->seatList[$id];
+        }
+
+        return null;
     }
 
     public function getSeatByPosition(int $row, int $col): ?Entity\Seat\Seat
@@ -75,7 +89,7 @@ class Section extends Entity\Entity
             throw new Exception\EntityIdException($id);
         }
 
-        if (array_key_exists($id, $this->seatList))
+        if ($this->hasSeatById($id))
         {
             unset($this->seatList[$id]);
             return true;
