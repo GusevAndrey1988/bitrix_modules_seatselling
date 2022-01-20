@@ -6,8 +6,11 @@ use Site\SeatSelling\Model\Entity;
 use Site\SeatSelling\Model\Exception;
 use Site\SeatSelling\Model\Validator;
 
-class SeatCost extends Entity\Entity
+class SeatCost
 {
+    /** @var Entity\Seat\Seat $seat*/
+    private $seat = null;
+
     /** @var Entity\PricePolicy\PricePolicy $pricePolicy */
     private $pricePolicy = null;
 
@@ -15,12 +18,12 @@ class SeatCost extends Entity\Entity
     private $value = 0;
 
     public function __construct(
-        int $id,
+        Entity\Seat\Seat $seat,
         Entity\PricePolicy\PricePolicy $pricePolicy,
         float $value = 0
     )
     {
-        $this->setId($id);
+        $this->setSeat($seat);
         $this->setPricePolicy($pricePolicy);
         $this->setValue($value);
     }
@@ -43,9 +46,19 @@ class SeatCost extends Entity\Entity
         return $this->value;
     }
 
+    public function getSeat(): Entity\Seat\Seat
+    {
+        return $this->seat;
+    }
+
     public function getPricePolicy(): Entity\PricePolicy\PricePolicy
     {
         return $this->pricePolicy;
+    }
+
+    private function setSeat(Entity\Seat\Seat $seat)
+    {
+        $this->seat = $seat;
     }
 
     private function setPricePolicy(Entity\PricePolicy\PricePolicy $pricePolicy): void
