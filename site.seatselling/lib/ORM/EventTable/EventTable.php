@@ -3,6 +3,7 @@
 namespace Site\SeatSelling\ORM\EventTable;
 
 use Bitrix\Main\ORM;
+use Site\SeatSelling\ORM\TicketTable\TicketTable;
 
 class EventTable extends ORM\Data\DataManager
 {
@@ -58,6 +59,12 @@ class EventTable extends ORM\Data\DataManager
                 'PRICE_POLICY',
                 \Site\SeatSelling\ORM\PricePolicyTable\PricePolicyTable::class,
                 ORM\Query\Join::on('this.PRICE_POLICY_ID', 'ref.ID'),
+            ))->configureJoinType('inner'),
+
+            (new ORM\Fields\Relations\OneToMany(
+                'TICKETS',
+                TicketTable::class,
+                'EVENT'
             ))->configureJoinType('inner'),
         ];
     }

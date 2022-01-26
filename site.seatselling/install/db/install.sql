@@ -54,18 +54,18 @@ CREATE TABLE IF NOT EXISTS `site_seat_selling_event` (
         ON UPDATE CASCADE
 );
 
-/* CREATE TABLE IF NOT EXISTS `site_seat_selling_ticket` (
+CREATE TABLE IF NOT EXISTS `site_seat_selling_ticket` (
     `ID` INT(11) PRIMARY KEY AUTO_INCREMENT,
-    `SEAT` INT(11) NOT NULL,
-    `EVENT` INT(11) NOT NULL,
+    `SEAT_ID` INT(11) NOT NULL,
+    `EVENT_ID` INT(11) NOT NULL,
 
-    FOREIGN KEY (`SEAT`)
+    FOREIGN KEY (`SEAT_ID`)
         REFERENCES `site_seat_selling_seat`(`ID`)
-        ON DELETE SET NULL
+        ON DELETE RESTRICT
         ON UPDATE CASCADE,
 
-    FOREIGN KEY (`EVENT`)
+    FOREIGN KEY (`EVENT_ID`)
         REFERENCES `site_seat_selling_event`(`ID`)
         ON DELETE RESTRICT
         ON UPDATE CASCADE
-); */
+);

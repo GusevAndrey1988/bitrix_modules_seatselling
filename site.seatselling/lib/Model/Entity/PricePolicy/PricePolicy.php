@@ -13,7 +13,8 @@ class PricePolicy extends Entity\Entity
 
     public function __construct(int $id, string $name)
     {
-        $this->setId($id);
+        parent::__construct($id);
+
         $this->setName($name);
     }
 

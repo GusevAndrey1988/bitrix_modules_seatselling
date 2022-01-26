@@ -20,7 +20,8 @@ class Section extends Entity\Entity
      */
     public function __construct(int $id, string $name)
     {
-        $this->setId($id);
+        parent::__construct($id);
+
         $this->setName($name);
     }
 
@@ -45,16 +46,16 @@ class Section extends Entity\Entity
 
     public function addSeat(Entity\Seat\Seat $seat): bool
     {
-        if (!$this->hasSeatById($seat->getId()))
+        if (!$this->hasSeatById($seat->getEntityId()))
         {
-            $this->seatList[$seat->getId()] = $seat;
+            $this->seatList[$seat->getEntityId()] = $seat;
             return true;
         }
 
         return false;
     }
 
-    public function hasSeatById(int $id): bool
+    public function hasSeatById(string $id): bool
     {
         return array_key_exists($id, $this->seatList);
     }
@@ -87,11 +88,6 @@ class Section extends Entity\Entity
      */
     public function removeSeatById(int $id): bool
     {
-        if (!Validator\EntityIdValidator::validate($id))
-        {
-            throw new Exception\EntityIdException($id);
-        }
-
         if ($this->hasSeatById($id))
         {
             unset($this->seatList[$id]);

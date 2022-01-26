@@ -5,6 +5,7 @@ namespace Site\SeatSelling\ORM\SeatTable;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\ORM;
 use Bitrix\Main\ORM\Event;
+use Site\SeatSelling\ORM\TicketTable\TicketTable;
 
 Loc::loadMessages(__FILE__);
 
@@ -62,6 +63,12 @@ class SeatTable extends ORM\Data\DataManager
             (new ORM\Fields\Relations\OneToMany(
                 'COSTS',
                 \Site\SeatSelling\ORM\CostTable\CostTable::class,
+                'SEAT'
+            ))->configureJoinType('inner'),
+
+            (new ORM\Fields\Relations\OneToMany(
+                'TICKETS',
+                TicketTable::class,
                 'SEAT'
             ))->configureJoinType('inner'),
         ];

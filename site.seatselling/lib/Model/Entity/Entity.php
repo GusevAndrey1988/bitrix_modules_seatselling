@@ -7,17 +7,10 @@ use Site\SeatSelling\Model\Validator;
 
 class Entity
 {
+    /** @var int $id */
     private $id = 0;
 
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-     /**
-     * @throws Exception\EntityIdException
-     */
-    protected function setId($id): void
+    public function __construct(int $id)
     {
         if (!Validator\EntityIdValidator::validate($id))
         {
@@ -25,5 +18,10 @@ class Entity
         }
 
         $this->id = $id;
+    }
+
+    public function getEntityId(): int
+    {
+        return $this->id;
     }
 }

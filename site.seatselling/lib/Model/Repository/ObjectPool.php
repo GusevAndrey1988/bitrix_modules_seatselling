@@ -8,41 +8,25 @@ class ObjectPool
 {
     use Singleton;
 
-    /** @var array $objects */
-    private $objects = [];
+    /** @var array $objectList */
+    private $objectList = [];
 
-    public function addToPool(object $object, ...$primaryKeyList): void
+    public function addToPool(object $object, string $uniqueId): void
     {
-        $link = &$this->objects[$object::class];
-
-        foreach ($primaryKeyList as $primary)
-        {
-            $link = &$link[$primary];
-        }
-
-        $link = $object;
+        $this->objectList[$object::class][$uniqueId] = $object;
     }
 
-    public function getFromPool(string $className, ...$primaryKeyList): ?object
+    public function getFromPool(string $className, string $uniqueId): ?object
     {
-       $link = &$this->objects[$className];
-
-        foreach ($primaryKeyList as $primary)
+        if (
+            isset($this->objectList[$className]) 
+            && isset($this->objectList[$className][$uniqueId])
+        )
         {
-            if (is_object($link))
-            {
-                return null;
-            }
-
-            $link = &$link[$primary];
+            return $this->objectList[$className][$uniqueId];
         }
 
-        if (!$link || !is_object($link))
-        {
-            return null;
-        }
-
-        return $link;
+        return null;
     }
 
     public function getObjectPool(): array

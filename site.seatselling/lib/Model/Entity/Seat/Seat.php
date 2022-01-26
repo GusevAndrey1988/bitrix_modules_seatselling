@@ -19,7 +19,8 @@ class Seat extends Entity\Entity
 
     public function __construct(int $id, int $row, int $col, Entity\Section\Section $section)
     {
-        $this->setId($id);
+        parent::__construct($id);
+
         $this->setRow($row);
         $this->setCol($col);
         $this->setSection($section);
@@ -72,7 +73,7 @@ class Seat extends Entity\Entity
     {
         if ($this->section)
         {
-            $this->section->removeSeatById($this->getId());
+            $this->section->removeSeatById($this->getEntityId());
         }
 
         $this->section = $section;

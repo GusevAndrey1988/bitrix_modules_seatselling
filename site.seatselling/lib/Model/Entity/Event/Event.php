@@ -32,7 +32,8 @@ class Event extends Entity\Entity
         int $duration = 0
     )
     {
-        $this->setId($id);
+        parent::__construct($id);
+
         $this->setPricePolicy($pricePolicy);
         $this->setName($name);
         $this->setEventTime($eventTime);
